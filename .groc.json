@@ -1,0 +1,9 @@
+{
+  "glob": [
+    "routes/**/*.js"
+  ],
+  "except": [
+  ],
+  "github": false,
+  "out": "./doc"
+}
