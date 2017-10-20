@@ -1,3 +1,13 @@
+git pull 이후
+
+npm install  : 사용 모듈 설치
+
+package.json에
+
+"scripts": {
+    "start": "nodemon ./bin/www"  nodemon으로 되어있음 ( nodenmon 사용 안하시려면 node로 수정)
+  },
+
 디렉토리 구조
 config : 설정 파일들 있는곳 ( mysql config)
 db : DB 관련 js
