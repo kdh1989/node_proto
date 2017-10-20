@@ -12,6 +12,7 @@ package.json에
 config : 설정 파일들 있는곳 ( mysql config)
 db : DB 관련 js
 doc : 간단 문서 생성 저장하는 곳 ( groc 사용중 )
+middle : 미들웨어나 공용 객체 저장하는 곳
 node_modules : npm 모듈들 있는곳
 public : 공용으로 사용되는 리소스 및 css 
 routes : 핵심! 라우터 설정 및 실제 작업 하는 곳
