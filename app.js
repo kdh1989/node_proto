@@ -5,15 +5,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var paramCheck = require('./middle/paramCheck');
-var respone = require('./middle/respone').respone();
-
-var api = require('./routes/api');
-var manager = require('./routes/manager');
 var adminSetting = require('./routes/adminSetting');
-//var users = require('./routes/users');
+var test = require('./routes/test');
 
-var cors = require('cors');
+var cors = require('cors'); //크로스 도메인 관리하는 모듈
 
 var app = express();
 
@@ -30,39 +25,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
-app.use(function(req, res, next) {
-	
-	paramCheck.ParamCheck(req.body, function(isCheck) {
-		
-		if(isCheck) { //Param 값 있음
-			paramCheck.ParamIsVal(req.body.param,function(isJson, key) {
-				
-				if(isJson) //Json 값 전부 있음
-				{
-					
-					next();
-				}
-				else //Json 값 Null 존재
-				{
-					respone.setRespone(1, "null Param Key : " + key);
-					res.send(respone.getRespone());
-					
-
-				}
-			});
-		}
-		else { //Param Null
-			respone.setRespone(1, "null Param Data ");
-			res.send(respone.getRespone());
-		}
-	});
-
-});
-
-app.use('/api', api);
-app.use('/manager', manager);
-app.use('/adminSetting',adminSetting);
-//app.use('/users', users);
+app.use('/adminSetting',adminSetting); //관리자 설정 라우터 
+app.use('/test', test); //테스트 라우터 
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
