@@ -109,7 +109,7 @@ router.get('/get', function(req, res, next) {
 
 		connection.query(
 			{
-				sql : 	"SELECT MENU_NAME, URL FROM TB_MENU_INFO WHERE DEPTH = ? ORDER BY ORD",
+				sql : 	"SELECT MENU_SEQ, MENU_NAME, URL FROM TB_MENU_INFO WHERE DEPTH = ? ORDER BY ORD",
 				values : [param.depth]
 			}, function (err, rows, field) {
 			
@@ -164,8 +164,11 @@ router.get('/list', function(req, res, next) {
 			}
 
 			connection.query( {
-				sql : 	"SELECT MENU_SEQ, MENU_NAME, URL, DEPTH, ORD, PRT_MENU FROM TB_MENU_INFO " + 
-											" ORDER BY DEPTH, PRT_MENU, ORD " +limitQuery
+				sql : 	" SELECT A.MENU_SEQ, A.MENU_NAME, A.URL, A.DEPTH, A.ORD, A.PRT_MENU, B.MENU_NAME AS PRT_MENU_NAME "+
+						" FROM TB_MENU_INFO A " +
+						" LEFT JOIN TB_MENU_INFO B " +
+						" ON A.PRT_MENU = B.MENU_SEQ " +
+						" ORDER BY A.DEPTH, A.PRT_MENU, A.ORD " +limitQuery
 			}, function (err, rows, field) { 
 				
 				if(err)
@@ -222,9 +225,12 @@ router.get('/search', function(req, res, next) {
 			}
 
 			connection.query( {
-				sql : 	"SELECT MENU_SEQ, MENU_NAME, URL, DEPTH, ORD, PRT_MENU FROM TB_MENU_INFO " + 
-						" WHERE MENU_NAME LIKE ? " +
-						" ORDER BY DEPTH, PRT_MENU, ORD " + limitQuery,
+				sql : 	" SELECT A.MENU_SEQ, A.MENU_NAME, A.URL, A.DEPTH, A.ORD, A.PRT_MENU, B.MENU_NAME AS PRT_MENU_NAME " + 
+						" FROM TB_MENU_INFO A " +
+						" LEFT JOIN TB_MENU_INFO B " +
+						" ON A.PRT_MENU = B.MENU_SEQ " +
+						" WHERE A.MENU_NAME LIKE ? " +
+						" ORDER BY A.DEPTH, A.PRT_MENU, A.ORD " + limitQuery,
 				values : ["%"+param.menu_name+"%"]
 			}, function (err, rows, field) { 
 				
