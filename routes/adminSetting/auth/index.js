@@ -207,4 +207,44 @@ router.post('/update', function(req, res, next) {
 	
 });
 
+// 권한키로 특정 권한 정보만 가져오기 
+router.get('/getAuth', function(req, res, next) {
+	var param = JSON.parse(req.query.param); 
+	console.log(param);
+	
+	pool.getConnection( function(err,connection) {
+		
+		if(err) { 
+			respone.setRespone(1,err);
+			res.send(respone.getRespone());
+
+			return;
+		}
+
+		connection.query(
+			{
+				sql : 	"SELECT AUTH_SEQ, AUTH_NAME FROM TB_AUTH_INFO " + 
+						" WHERE AUTH_SEQ = ? ",
+				values : [param.auth_seq]
+			}, function (err, rows, field) {
+			
+			if(err) {
+				connection.release(); 
+
+				respone.setRespone(1,err);
+				res.send(respone.getRespone());
+
+				return;
+				
+			}
+
+			connection.release();
+			
+			respone.setRespone(0,err,rows);
+			res.send(respone.getRespone());
+			
+		});
+	});
+});
+
 module.exports = router;
