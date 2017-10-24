@@ -76,7 +76,7 @@ router.get('/list', function(req, res, next) {
 			}
 
 			connection.query( {
-				sql : 	"SELECT AUTH_NAME FROM TB_AUTH_INFO " + 
+				sql : 	"SELECT AUTH_SEQ, AUTH_NAME FROM TB_AUTH_INFO " + 
 						" ORDER BY AUTH_SEQ " +limitQuery
 			}, function (err, rows, field) { 
 				
