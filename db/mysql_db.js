@@ -6,9 +6,11 @@ var pool = mysql.createPool(
 );
 
 //페이징할 테이블의 카운트 쿼리
-var CountQuery = function (table, callback ) {
+var CountQuery = function (query, callback ) {
 
-	const query = "SELECT COUNT(*) AS cnt FROM " + table;
+	//var query = "SELECT COUNT(*) AS cnt FROM " + table;
+
+	//var query = 
 
 	pool.getConnection( function(err, connection) {
 
