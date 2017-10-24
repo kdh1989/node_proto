@@ -22,9 +22,9 @@ router.post('/set', function(req, res, next) {
 		connection.query(
 			{
 				sql : 	"INSERT INTO TB_MENU_INFO " + 
-						"(MENU_SEQ, MENU_NAME, URL, DEPTH, ORD, PRT_MENU, REG_TIME) " +
-						" VALUES (?, ?, ?, ?, ?, ?, NOW() )",
-				values : [param.menu_seq, param.menu_name, param.url, param.depth, param.ord, param.prt_menu]
+						"( MENU_NAME, URL, DEPTH, ORD, PRT_MENU, REG_TIME) " +
+						" VALUES ( ?, ?, ?, ?, ?, NOW() )",
+				values : [ param.menu_name, param.url, param.depth, param.ord, param.prt_menu]
 			}, function (err, rows, field) { 
 			
 			if(err) { //쿼리를 날렸을 경우 에러가 나왔을 시
