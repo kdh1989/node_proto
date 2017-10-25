@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var adminSetting = require('./routes/adminSetting');
+var test = require('./routes/test');
 
 var cors = require('cors'); //크로스 도메인 관리하는 모듈
 
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
 app.use('/adminSetting',adminSetting); //관리자 설정 라우터 
+app.use('/test',test); //테스트 코드 라우터
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
