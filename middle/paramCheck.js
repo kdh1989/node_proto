@@ -1,15 +1,12 @@
 var Promise = require('bluebird');
 
-var PromiseCheckParam = function(param, CheckKey) {
+var CheckParam = function(param, CheckKey) {
 	
 	var objParam = typeof param === 'object' ? param : typeof param === 'undefined' ? null : JSON.parse(param);
 	var checkKey = CheckKey;
 
 	//키가 존재하는지 체크 
 	function isExits() {
-
-			if(objParam === null)
-				return false;
 
 			var key = Object.keys(objParam).filter(function(value){
 				return value == checkKey;
@@ -31,16 +28,14 @@ var PromiseCheckParam = function(param, CheckKey) {
 			if(objParam === null)
 				return reject("isExits Param ");
 
-			var key = Object.keys(objParam).filter(function(value){
-				return value == checkKey;
-			});
-
-			if(key.length) {
+			if(isExits())
+			{
 				return resoleve(true);
 			}
 			else {
 				return reject("isExits Key : "+checkKey);
 			}
+
 		});
 		
 	}
@@ -48,20 +43,13 @@ var PromiseCheckParam = function(param, CheckKey) {
 	//값이 있는지 체크 
 	function isEmpty() {
 
-		if(objParam === null)
-				return false;
-
-		if(isExits()) { //키가 존재하는지 체크
-
-			if(objParam[checkKey] === null || objParam[checkKey] === "") { //값이 존재하는지 체크 
-				return false;
-			} else {
-				return true;
-			}
-
-		} else { //키가 존재하지 않는다.
+	
+		if(objParam[checkKey] === null || objParam[checkKey] === "") { //값이 존재하는지 체크 
 			return false;
+		} else {
+			return true;
 		}
+
 
 	}
 
@@ -74,10 +62,10 @@ var PromiseCheckParam = function(param, CheckKey) {
 
 			if(isExits()) { //키가 존재하는지 체크
 
-				if(objParam[checkKey] === null || objParam[checkKey] === "") { //값이 존재하는지 체크 
-					return reject("isEmpty Key : "+checkKey);
-				} else {
+				if(isEmpty()) { //값이 존재하는지 체크 
 					return resoleve(true);
+				} else {
+					return reject("isEmpty Key : "+checkKey);
 				}
 
 			} else { //키가 존재하지 않는다.
@@ -94,4 +82,4 @@ var PromiseCheckParam = function(param, CheckKey) {
 
 }
 
-module.exports.PromiseCheckParam = PromiseCheckParam;
+module.exports.CheckParam = CheckParam;
